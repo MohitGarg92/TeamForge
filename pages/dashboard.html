@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard - Project Team Matcher</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/dashboard.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-brand">Project Team Matcher</div>
+        <div class="nav-links">
+            <a href="dashboard.html">Dashboard</a>
+            <a href="available-teams.html">Teams</a>
+            <a href="my-requests.html">My Requests</a>
+            <a href="profile.html">Profile</a>
+            <a href="#" id="logoutBtn">Logout</a>
+        </div>
+    </nav>
+    <div class="container section">
+        <div class="welcome-section">
+            <h1 id="welcomeUser">Welcome</h1>
+            <p>Find a team or create one for your next project.</p>
+        </div>
+        
+        <div class="grid-2 mt-2">
+            <div class="card center bg-light border-red">
+                <h3>Create a Team</h3>
+                <p>Define skills and find students.</p>
+                <a href="create-team.html" class="btn-primary mt-1">Create Team</a>
+            </div>
+            <div class="card center bg-light border-charcoal">
+                <h3>Join a Team</h3>
+                <p>Browse teams matching your skills.</p>
+                <a href="available-teams.html" class="btn-secondary mt-1">Find Teams</a>
+            </div>
+        </div>
+
+        <h2 class="mt-3">Current Working Projects</h2>
+        <div id="workingProjects" class="grid-3 mt-1"></div>
+    </div>
+    <script src="../js/mock-data.js"></script>
+    <script src="../js/main.js"></script>
+    <script src="../js/dashboard.js"></script>
+</body>
+</html>

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login - Project Team Matcher</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/auth.css">
+</head>
+<body class="bg-light">
+    <div class="auth-container">
+        <div class="card auth-card">
+            <h2 class="text-center">Login</h2>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label>Student ID</label>
+                    <input type="text" id="studentId" required placeholder="e.g. 102024000">
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" id="password" required>
+                </div>
+                <button type="submit" class="btn-primary w-100">Login</button>
+                <div class="auth-links text-center mt-1">
+                    <a href="#">Forgot Password?</a><br>
+                    <a href="register.html">Don't have an account? Register</a>
+                </div>
+            </form>
+        </div>
+    </div>
+    <script src="../js/mock-data.js"></script>
+    <script src="../js/main.js"></script>
+    <script src="../js/auth.js"></script>
+</body>
+</html>

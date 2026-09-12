@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8"><title>My Requests</title><link rel="stylesheet" href="../css/style.css"></head>
+<body>
+    <nav class="navbar"><div class="nav-brand">Project Team Matcher</div><div class="nav-links"><a href="dashboard.html">Dashboard</a></div></nav>
+    <div class="container section"><h2>My Requests</h2><div id="requestsList" class="mt-2"></div></div>
+    <script src="../js/mock-data.js"></script><script src="../js/main.js"></script>
+    <script>
+        const reqs = api.getData().requests.filter(r => r.studentId === api.getCurrentUser());
+        const cont = document.getElementById('requestsList');
+        if(reqs.length === 0) cont.innerHTML = "<p>No requests found.</p>";
+        else {
+            reqs.forEach(r => {
+                cont.innerHTML += `<div class="card mt-1"><h4>Team ID: ${r.teamId}</h4><p>Status: <strong>${r.status}</strong></p></div>`;
+            });
+        }
+    </script>
+</body>
+</html>

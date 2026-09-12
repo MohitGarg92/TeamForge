@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Create Team</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-brand">Project Team Matcher</div>
+        <div class="nav-links"><a href="dashboard.html">Dashboard</a></div>
+    </nav>
+    <div class="container section">
+        <h2>Create a New Team</h2>
+        <div class="card mt-1">
+            <form id="createTeamForm">
+                <div class="form-group"><label>Team Name</label><input type="text" id="tName" required></div>
+                <div class="form-group"><label>Description</label><textarea id="tDesc" required></textarea></div>
+                <div class="form-group"><label>Hackathon</label><input type="text" id="tHack" required></div>
+                <div class="form-group"><label>Required Capacity</label><input type="number" id="tCap" required></div>
+                <div class="form-group"><label>Required Skills (comma separated)</label><input type="text" id="tSkills" required></div>
+                <button type="submit" class="btn-primary mt-1">Create Team</button>
+            </form>
+        </div>
+    </div>
+    <script src="../js/mock-data.js"></script>
+    <script src="../js/main.js"></script>
+    <script>
+        document.getElementById('createTeamForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            alert("Team created successfully! (Mock)");
+            window.location.href = 'my-teams.html';
+        });
+    </script>
+</body>
+</html>

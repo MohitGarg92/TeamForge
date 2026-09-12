@@ -1,0 +1,1 @@
+.auth-container { min-height: 80vh; display: flex; align-items: center; justify-content: center; } .auth-card { width: 100%; max-width: 400px; } .auth-container.large .auth-card { max-width: 600px; }

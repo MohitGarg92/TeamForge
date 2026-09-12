@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Available Teams</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/teams.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-brand">Project Team Matcher</div>
+        <div class="nav-links">
+            <a href="dashboard.html">Dashboard</a>
+            <a href="available-teams.html">Teams</a>
+            <a href="my-teams.html">My Teams</a>
+            <a href="profile.html">Profile</a>
+        </div>
+    </nav>
+    <div class="container section">
+        <h2>Available Teams</h2>
+        <div class="filters card mt-1">
+            <input type="text" id="searchTeam" placeholder="Search by name...">
+            <select id="filterHackathon">
+                <option value="all">All Hackathons</option>
+                <option value="Hack4Good">Hack4Good</option>
+                <option value="AI Innovation Challenge">AI Innovation Challenge</option>
+            </select>
+            <button class="btn-outline" onclick="filterTeams()">Apply Filters</button>
+        </div>
+        <div id="teamsList" class="grid-3 mt-2"></div>
+    </div>
+    <script src="../js/mock-data.js"></script>
+    <script src="../js/main.js"></script>
+    <script src="../js/teams.js"></script>
+</body>
+</html>

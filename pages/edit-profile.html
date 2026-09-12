@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8"><title>Edit Profile</title><link rel="stylesheet" href="../css/style.css"></head>
+<body>
+    <nav class="navbar"><div class="nav-brand">Project Team Matcher</div><div class="nav-links"><a href="dashboard.html">Dashboard</a></div></nav>
+    <div class="container section">
+        <h2>Edit Profile</h2>
+        <div class="card mt-1">
+            <form id="editProfileForm">
+                <div class="form-group"><label>Student ID (Cannot change)</label><input type="text" id="pId" disabled></div>
+                <div class="form-group"><label>GitHub</label><input type="text" id="pGit"></div>
+                <div class="form-group"><label>LinkedIn</label><input type="text" id="pLink"></div>
+                <button type="submit" class="btn-primary mt-1">Save Changes</button>
+            </form>
+        </div>
+    </div>
+    <script src="../js/mock-data.js"></script><script src="../js/main.js"></script>
+    <script>
+        api.requireAuth();
+        const user = api.getData().students.find(s => s.studentId === api.getCurrentUser());
+        document.getElementById('pId').value = user.studentId;
+        document.getElementById('pGit').value = user.github || "";
+        document.getElementById('pLink').value = user.linkedin || "";
+        document.getElementById('editProfileForm').addEventListener('submit', (e)=>{
+            e.preventDefault(); alert("Profile Updated"); window.location.href='profile.html';
+        });
+    </script>
+</body>
+</html>
