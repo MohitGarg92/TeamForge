@@ -24,7 +24,7 @@ a { text-decoration: none; }
 
 /* Nav */
 .navbar { display: flex; justify-content: space-between; padding: 1rem 2rem; border-bottom: 1px solid var(--border-gray); }
-.nav-brand { font-weight: 700; color: var(--primary-red); font-size: 1.2rem; }
+.nav-brand { font-weight: 1000; color: var(--primary-red); font-size: 1.8rem; }
 .nav-links a { margin-left: 1rem; color: var(--text-main); }
 
 /* Buttons */
