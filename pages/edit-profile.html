@@ -8,8 +8,12 @@
         <div class="card mt-1">
             <form id="editProfileForm">
                 <div class="form-group"><label>Student ID (Cannot change)</label><input type="text" id="pId" disabled></div>
-                <div class="form-group"><label>GitHub</label><input type="text" id="pGit"></div>
-                <div class="form-group"><label>LinkedIn</label><input type="text" id="pLink"></div>
+                <div class="form-group"><label>Full Name</label><input type="text" id="pName"></div>
+                <div class="form-group"><label>Email</label><input type="email" id="pEmail"></div>
+                <div class="form-group"><label>Phone</label><input type="text" id="pPhone" placeholder="9876543210"></div>
+                <div class="form-group"><label>GitHub</label><input type="text" id="pGit" placeholder="github.com/username"></div>
+                <div class="form-group"><label>LinkedIn</label><input type="text" id="pLink" placeholder="linkedin.com/in/username"></div>
+                <div class="form-group"><label>Skills (comma separated)</label><input type="text" id="pSkills" placeholder="C++, Python, ML"></div>
                 <button type="submit" class="btn-primary mt-1">Save Changes</button>
             </form>
         </div>
@@ -17,12 +21,35 @@
     <script src="../js/mock-data.js"></script><script src="../js/main.js"></script>
     <script>
         api.requireAuth();
-        const user = api.getData().students.find(s => s.studentId === api.getCurrentUser());
+        const data = api.getData();
+        const user = data.students.find(s => s.studentId === api.getCurrentUser());
+        if (!user) { alert('User not found'); window.location.href = 'login.html'; }
+
+        // Pre-fill fields
         document.getElementById('pId').value = user.studentId;
+        document.getElementById('pName').value = user.name || "";
+        document.getElementById('pEmail').value = user.email || "";
+        document.getElementById('pPhone').value = user.phone || "";
         document.getElementById('pGit').value = user.github || "";
         document.getElementById('pLink').value = user.linkedin || "";
-        document.getElementById('editProfileForm').addEventListener('submit', (e)=>{
-            e.preventDefault(); alert("Profile Updated"); window.location.href='profile.html';
+        document.getElementById('pSkills').value = (user.skills || []).join(', ');
+
+        document.getElementById('editProfileForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const freshData = api.getData();
+            const u = freshData.students.find(s => s.studentId === api.getCurrentUser());
+
+            u.name = document.getElementById('pName').value.trim() || u.name;
+            u.email = document.getElementById('pEmail').value.trim() || u.email;
+            u.phone = document.getElementById('pPhone').value.trim();
+            u.github = document.getElementById('pGit').value.trim();
+            u.linkedin = document.getElementById('pLink').value.trim();
+            const skillsRaw = document.getElementById('pSkills').value.trim();
+            u.skills = skillsRaw ? skillsRaw.split(',').map(s => s.trim()).filter(Boolean) : u.skills;
+
+            api.saveData(freshData);
+            alert("Profile updated!");
+            window.location.href = 'profile.html';
         });
     </script>
 </body>
