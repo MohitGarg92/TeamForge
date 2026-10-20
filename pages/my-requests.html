@@ -1,10 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
-<head><meta charset="UTF-8"><title>My Requests</title><link rel="stylesheet" href="../css/style.css"></head>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Requests - TeamForge</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
 <body>
-    <nav class="navbar"><div class="nav-brand">Project Team Matcher</div><div class="nav-links"><a href="dashboard.html">Dashboard</a><a href="available-teams.html">Teams</a></div></nav>
-    <div class="container section"><h2>My Requests</h2><div id="requestsList" class="mt-2"></div></div>
-    <script src="../js/mock-data.js"></script><script src="../js/main.js"></script>
+    <nav class="navbar" id="mainNav">
+        <div class="nav-brand">TeamForge</div>
+        <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
+            <span></span><span></span><span></span>
+        </button>
+        <div class="nav-links" id="navLinks">
+            <a href="dashboard.html">Dashboard</a>
+            <a href="available-teams.html">Browse Teams</a>
+            <a href="my-teams.html">My Teams</a>
+            <a href="my-requests.html" class="active">My Requests</a>
+            <a href="profile.html">Profile</a>
+            <a href="#" id="logoutBtn" class="btn-nav-outline">Logout</a>
+        </div>
+    </nav>
+    <div class="container section">
+        <div class="page-header">
+            <h2>📩 My Requests</h2>
+            <p>Track the status of your join requests.</p>
+        </div>
+        <div id="requestsList" class="mt-2"></div>
+    </div>
+    <script src="../js/mock-data.js"></script>
+    <script src="../js/main.js"></script>
     <script>
         api.requireAuth();
         const data = api.getData();
@@ -12,17 +37,23 @@
         const cont = document.getElementById('requestsList');
 
         if (reqs.length === 0) {
-            cont.innerHTML = "<p class='text-muted'>No requests found. Browse available teams to send a join request.</p>";
+            cont.innerHTML = `
+                <div class="empty-state">
+                    <div class="empty-state-icon">📭</div>
+                    <p>No requests found. Browse available teams to send a join request.</p>
+                    <a href="available-teams.html" class="btn-primary mt-2">Browse Teams</a>
+                </div>
+            `;
         } else {
             reqs.forEach(r => {
                 const team = data.teams.find(t => t.id === r.teamId);
                 const teamName = team ? team.name : `Team #${r.teamId}`;
-                const statusClass = r.status === 'Accepted' ? 'text-red' : '';
+                const statusColor = r.status === 'Accepted' ? 'color:#16a34a' : r.status === 'Rejected' ? 'color:#dc2626' : 'color:#d97706';
                 cont.innerHTML += `
                     <div class="card mt-1">
                         <h4>${teamName}</h4>
                         ${team ? `<p class="text-muted">${team.hackathon}</p>` : ''}
-                        <p>Status: <strong class="${statusClass}">${r.status}</strong></p>
+                        <p>Status: <strong style="${statusColor}">${r.status}</strong></p>
                     </div>
                 `;
             });

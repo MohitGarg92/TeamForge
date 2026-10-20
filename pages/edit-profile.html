@@ -1,24 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
-<head><meta charset="UTF-8"><title>Edit Profile</title><link rel="stylesheet" href="../css/style.css"></head>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Profile - TeamForge</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
 <body>
-    <nav class="navbar"><div class="nav-brand">Project Team Matcher</div><div class="nav-links"><a href="dashboard.html">Dashboard</a></div></nav>
+    <nav class="navbar" id="mainNav">
+        <div class="nav-brand">TeamForge</div>
+        <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
+            <span></span><span></span><span></span>
+        </button>
+        <div class="nav-links" id="navLinks">
+            <a href="dashboard.html">Dashboard</a>
+            <a href="profile.html">Profile</a>
+            <a href="#" id="logoutBtn" class="btn-nav-outline">Logout</a>
+        </div>
+    </nav>
     <div class="container section">
-        <h2>Edit Profile</h2>
+        <div class="page-header">
+            <h2>✏️ Edit Profile</h2>
+            <p>Update your personal and professional information.</p>
+        </div>
         <div class="card mt-1">
             <form id="editProfileForm">
                 <div class="form-group"><label>Student ID (Cannot change)</label><input type="text" id="pId" disabled></div>
-                <div class="form-group"><label>Full Name</label><input type="text" id="pName"></div>
-                <div class="form-group"><label>Email</label><input type="email" id="pEmail"></div>
+                <div class="form-group"><label>Full Name</label><input type="text" id="pName" placeholder="Enter your full name"></div>
+                <div class="form-group"><label>Email</label><input type="email" id="pEmail" placeholder="you@thapar.edu"></div>
                 <div class="form-group"><label>Phone</label><input type="text" id="pPhone" placeholder="9876543210"></div>
                 <div class="form-group"><label>GitHub</label><input type="text" id="pGit" placeholder="github.com/username"></div>
                 <div class="form-group"><label>LinkedIn</label><input type="text" id="pLink" placeholder="linkedin.com/in/username"></div>
                 <div class="form-group"><label>Skills (comma separated)</label><input type="text" id="pSkills" placeholder="C++, Python, ML"></div>
-                <button type="submit" class="btn-primary mt-1">Save Changes</button>
+                <button type="submit" class="btn-primary mt-1">Save Changes →</button>
             </form>
         </div>
     </div>
-    <script src="../js/mock-data.js"></script><script src="../js/main.js"></script>
+    <script src="../js/mock-data.js"></script>
+    <script src="../js/main.js"></script>
     <script>
         api.requireAuth();
         const data = api.getData();

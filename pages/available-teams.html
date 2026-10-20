@@ -2,24 +2,32 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Available Teams</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Available Teams - TeamForge</title>
     <link rel="stylesheet" href="../css/style.css">
-    <link rel="stylesheet" href="../css/teams.css">
 </head>
 <body>
-    <nav class="navbar">
-        <div class="nav-brand">Project Team Matcher</div>
-        <div class="nav-links">
+    <nav class="navbar" id="mainNav">
+        <div class="nav-brand">TeamForge</div>
+        <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
+            <span></span><span></span><span></span>
+        </button>
+        <div class="nav-links" id="navLinks">
             <a href="dashboard.html">Dashboard</a>
-            <a href="available-teams.html">Teams</a>
+            <a href="available-teams.html" class="active">Browse Teams</a>
             <a href="my-teams.html">My Teams</a>
+            <a href="my-requests.html">My Requests</a>
             <a href="profile.html">Profile</a>
+            <a href="#" id="logoutBtn" class="btn-nav-outline">Logout</a>
         </div>
     </nav>
     <div class="container section">
-        <h2>Available Teams</h2>
+        <div class="page-header">
+            <h2>🔍 Available Teams</h2>
+            <p>Browse open teams and find one that matches your skills.</p>
+        </div>
         <div class="filters card mt-1">
-            <input type="text" id="searchTeam" placeholder="Search by name...">
+            <input type="text" id="searchTeam" placeholder="Search by name, skill, or description...">
             <select id="filterHackathon">
                 <option value="all">All Hackathons</option>
                 <option value="Hack4Good">Hack4Good</option>

@@ -2,14 +2,18 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Login - Project Team Matcher</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - TeamForge</title>
     <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="../css/auth.css">
 </head>
 <body class="bg-light">
     <div class="auth-container">
         <div class="card auth-card">
-            <h2 class="text-center">Login</h2>
+            <div class="text-center" style="margin-bottom:1.5rem">
+                <div class="nav-brand" style="justify-content:center; font-size:1.5rem; margin-bottom:0.5rem">TeamForge</div>
+                <p class="text-muted">Sign in to your account</p>
+            </div>
             <form id="loginForm">
                 <div class="form-group">
                     <label>Student ID</label>
@@ -17,12 +21,12 @@
                 </div>
                 <div class="form-group">
                     <label>Password</label>
-                    <input type="password" id="password">
+                    <input type="password" id="password" placeholder="Enter your password">
                 </div>
                 <button type="submit" class="btn-primary w-100">Login</button>
-                <div class="auth-links text-center mt-1">
-                    <a href="#">Forgot Password?</a><br>
-                    <a href="register.html">Don't have an account? Register</a>
+                <div class="text-center mt-1" style="font-size:0.9rem">
+                    <a href="#" class="text-red">Forgot Password?</a><br>
+                    <a href="register.html" style="margin-top:0.5rem; display:inline-block">Don't have an account? <strong class="text-red">Register</strong></a>
                 </div>
             </form>
         </div>

@@ -1099,3 +1099,422 @@ button:disabled, .btn-primary:disabled, .btn-secondary:disabled {
     opacity: 1;
     transform: translateY(0);
 }
+
+/* =====================================================
+   ABOUT SECTION
+   ===================================================== */
+.about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+}
+
+.about-description {
+    font-size: 1.05rem;
+    line-height: 1.8;
+    color: var(--gray-600);
+    margin: 1.5rem 0;
+}
+
+.about-highlights {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    margin-top: 1.5rem;
+}
+
+.about-highlights li {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+}
+
+.about-icon {
+    font-size: 1.5rem;
+    flex-shrink: 0;
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--red-50);
+    border-radius: var(--radius-md);
+    transition: transform var(--transition);
+}
+
+.about-highlights li:hover .about-icon {
+    transform: scale(1.15) rotate(-5deg);
+}
+
+.about-highlights li strong {
+    display: block;
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--gray-900);
+    margin-bottom: 0.2rem;
+}
+
+.about-highlights li p {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    margin: 0;
+}
+
+/* About illustration */
+.about-visual {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.about-illustration {
+    position: relative;
+    width: 300px;
+    height: 300px;
+}
+
+.illustration-card {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.85rem 1.1rem;
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-md);
+    transition: all var(--transition);
+    z-index: 2;
+    min-width: 200px;
+}
+
+.illustration-card:hover {
+    transform: translateY(-4px) scale(1.03);
+    box-shadow: var(--shadow-xl);
+}
+
+.illus-card-1 {
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    animation: floatCard 4s ease-in-out infinite;
+}
+
+.illus-card-2 {
+    bottom: 80px;
+    left: 0;
+    animation: floatCard 4s ease-in-out 1s infinite;
+}
+
+.illus-card-3 {
+    bottom: 0;
+    right: 0;
+    animation: floatCard 4s ease-in-out 2s infinite;
+}
+
+@keyframes floatCard {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+}
+
+.illus-card-1 { animation: floatCard 4s ease-in-out infinite, none; }
+.illus-card-1:hover { transform: translateX(-50%) translateY(-4px) scale(1.03); }
+
+.illus-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    font-size: 0.9rem;
+    flex-shrink: 0;
+}
+
+.illus-name {
+    font-weight: 700;
+    font-size: 0.9rem;
+    color: var(--gray-900);
+}
+
+.illus-role {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+}
+
+.illus-badge {
+    font-size: 0.7rem;
+    font-weight: 600;
+    padding: 0.2rem 0.5rem;
+    border-radius: 50px;
+    margin-left: auto;
+    white-space: nowrap;
+}
+
+.illus-badge-green {
+    color: #16a34a;
+    background: #f0fdf4;
+}
+
+.illus-badge-blue {
+    color: #2563eb;
+    background: #eff6ff;
+}
+
+.illus-badge-yellow {
+    color: #d97706;
+    background: #fffbeb;
+}
+
+.illus-connections {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    pointer-events: none;
+}
+
+.illus-line {
+    stroke-dashoffset: 100;
+    animation: drawLine 2s ease-out forwards;
+}
+
+.illus-line-delay {
+    animation-delay: 0.5s;
+}
+
+@keyframes drawLine {
+    to { stroke-dashoffset: 0; }
+}
+
+/* =====================================================
+   TEAM MEMBERS SECTION
+   ===================================================== */
+.team-member-card {
+    text-align: center;
+    padding: 2.5rem 1.5rem;
+    border-radius: var(--radius-lg);
+    background: var(--white);
+    border: 1px solid var(--border);
+    transition: all var(--transition);
+}
+
+.team-member-card:hover {
+    transform: translateY(-6px);
+    box-shadow: var(--shadow-xl);
+    border-color: var(--red-200);
+}
+
+.member-avatar {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1.25rem;
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--white);
+    transition: transform var(--transition-bounce);
+}
+
+.team-member-card:hover .member-avatar {
+    transform: scale(1.1);
+}
+
+.team-member-card h4 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--gray-900);
+    margin-bottom: 0.3rem;
+}
+
+.member-roll {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--primary);
+    margin-bottom: 0.3rem;
+    font-family: 'Inter', monospace;
+}
+
+/* =====================================================
+   CTA SECTION
+   ===================================================== */
+.cta-section {
+    background: linear-gradient(135deg, var(--gray-900) 0%, var(--red-900) 50%, var(--red-700) 100%);
+    color: var(--white);
+    text-align: center;
+    padding: 5rem 2rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.cta-section::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -30%;
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, rgba(255,255,255,0.05) 0%, transparent 70%);
+    border-radius: 50%;
+}
+
+.cta-content {
+    position: relative;
+    z-index: 2;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.cta-content h2 {
+    font-size: 2.25rem;
+    font-weight: 800;
+    margin-bottom: 0.75rem;
+    letter-spacing: -0.02em;
+}
+
+.cta-content p {
+    font-size: 1.1rem;
+    color: rgba(255,255,255,0.7);
+}
+
+/* =====================================================
+   HERO FLOATING SHAPES
+   ===================================================== */
+.hero-shapes {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    overflow: hidden;
+    z-index: 1;
+}
+
+.hero-shape {
+    position: absolute;
+    border-radius: 50%;
+    opacity: 0.08;
+    background: var(--white);
+}
+
+.shape-1 {
+    width: 300px;
+    height: 300px;
+    top: -100px;
+    right: -100px;
+    animation: floatShape 8s ease-in-out infinite;
+}
+
+.shape-2 {
+    width: 200px;
+    height: 200px;
+    bottom: -50px;
+    left: -50px;
+    animation: floatShape 10s ease-in-out 2s infinite;
+}
+
+.shape-3 {
+    width: 150px;
+    height: 150px;
+    top: 40%;
+    left: 20%;
+    animation: floatShape 7s ease-in-out 1s infinite;
+}
+
+@keyframes floatShape {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-20px) rotate(10deg); }
+}
+
+/* =====================================================
+   MOBILE MENU
+   ===================================================== */
+@media (max-width: 768px) {
+    .nav-toggle {
+        display: flex;
+    }
+
+    .nav-links {
+        display: none;
+        position: absolute;
+        top: 64px;
+        left: 0;
+        right: 0;
+        background: var(--white);
+        flex-direction: column;
+        padding: 1rem 2rem 1.5rem;
+        border-bottom: 1px solid var(--border);
+        box-shadow: var(--shadow-lg);
+        gap: 0.5rem;
+    }
+
+    .nav-links.open {
+        display: flex;
+        animation: fadeIn 0.2s ease-out;
+    }
+
+    .nav-links a {
+        width: 100%;
+        text-align: left;
+    }
+
+    .nav-links .btn-nav,
+    .nav-links .btn-nav-outline {
+        text-align: center;
+        margin-left: 0;
+    }
+
+    .hero h1 {
+        font-size: 2.25rem;
+    }
+
+    .hero {
+        padding: 5rem 1.5rem 4rem;
+    }
+
+    .about-grid {
+        grid-template-columns: 1fr;
+        gap: 2.5rem;
+    }
+
+    .about-illustration {
+        width: 260px;
+        height: 260px;
+    }
+
+    .hero-actions {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .stats-bar {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .cta-content h2 {
+        font-size: 1.75rem;
+    }
+
+    .nav-toggle.active span:nth-child(1) {
+        transform: rotate(45deg) translate(5px, 5px);
+    }
+    .nav-toggle.active span:nth-child(2) {
+        opacity: 0;
+    }
+    .nav-toggle.active span:nth-child(3) {
+        transform: rotate(-45deg) translate(5px, -5px);
+    }
+}

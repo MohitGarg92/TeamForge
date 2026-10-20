@@ -4,64 +4,310 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="TeamForge — A Thapar-only platform to discover teams, find teammates, and collaborate on hackathons and academic projects.">
     <title>TeamForge | Thapar Institute</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/responsive.css">
 </head>
 
 <body>
-    <nav class="navbar">
+    <!-- ========== NAVBAR ========== -->
+    <nav class="navbar" id="mainNav">
         <div class="nav-brand">TeamForge</div>
-        <div class="nav-links">
-            <a href="index.html">Home</a>
-            <a href="#">About</a>
-            <a href="pages/login.html" class="btn-outline">Login</a>
-            <a href="pages/register.html" class="btn-outline">Register</a>
+        <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
+            <span></span><span></span><span></span>
+        </button>
+        <div class="nav-links" id="navLinks">
+            <a href="index.html" class="active">Home</a>
+            <a href="#about">About</a>
+            <a href="#features">Features</a>
+            <a href="#team">Team</a>
+            <a href="pages/login.html" class="btn-nav-outline">Login</a>
+            <a href="pages/register.html" class="btn-nav">Get Started</a>
         </div>
     </nav>
+
+    <!-- ========== HERO ========== -->
     <header class="hero">
         <div class="hero-content">
-            <h1>Find the Right Team.<br>Build Something Great.</h1>
-            <p>A Thapar-only platform to discover teams, find teammates, and collaborate on projects and hackathons.</p>
+            <div class="hero-badge">🎓 Built for Thapar Students</div>
+            <h1>Find the Right Team.<br><span>Build Something Great.</span></h1>
+            <p>A Thapar-only platform to discover teams, find teammates, and collaborate on projects and hackathons — all in one place.</p>
             <div class="hero-actions">
-                <a href="pages/login.html" class="btn-primary">Login</a>
-                <a href="pages/register.html" class="btn-primary">Register</a>
+                <a href="pages/register.html" class="btn-hero btn-hero-primary">Get Started →</a>
+                <a href="#about" class="btn-hero btn-hero-outline">Learn More</a>
             </div>
+        </div>
+        <!-- Floating shapes for visual depth -->
+        <div class="hero-shapes">
+            <div class="hero-shape shape-1"></div>
+            <div class="hero-shape shape-2"></div>
+            <div class="hero-shape shape-3"></div>
         </div>
     </header>
-    <section class="section">
-        <h2>How it works</h2>
+
+    <!-- ========== STATS BAR ========== -->
+    <section class="stats-bar">
+        <div class="stat-item animate-fade-up">
+            <h3>50+</h3>
+            <p>Active Students</p>
+        </div>
+        <div class="stat-item animate-fade-up-delay-1">
+            <h3>20+</h3>
+            <p>Teams Formed</p>
+        </div>
+        <div class="stat-item animate-fade-up-delay-2">
+            <h3>5+</h3>
+            <p>Hackathons</p>
+        </div>
+        <div class="stat-item animate-fade-up-delay-3">
+            <h3>100%</h3>
+            <p>Free to Use</p>
+        </div>
+    </section>
+
+    <!-- ========== ABOUT ========== -->
+    <section class="section" id="about">
+        <div class="about-grid">
+            <div class="about-content reveal">
+                <div class="section-header" style="text-align:left">
+                    <div class="accent-bar" style="margin:0 0 1rem"></div>
+                    <h2>What is TeamForge?</h2>
+                    <p style="margin:0">The smart way to build your dream team at Thapar.</p>
+                </div>
+                <p class="about-description">
+                    TeamForge is a dedicated team-formation platform designed exclusively for students of <strong>Thapar Institute of Engineering &amp; Technology</strong>. Whether you're gearing up for a hackathon, starting an academic project, or looking for collaborators for a competition — TeamForge makes it effortless.
+                </p>
+                <ul class="about-highlights">
+                    <li>
+                        <span class="about-icon">🔍</span>
+                        <div>
+                            <strong>Discover Teams</strong>
+                            <p>Browse open teams filtered by skills, hackathons, and availability.</p>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="about-icon">🚀</span>
+                        <div>
+                            <strong>Create & Lead</strong>
+                            <p>Start your own team, define required skills, and recruit members.</p>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="about-icon">🤝</span>
+                        <div>
+                            <strong>Collaborate Instantly</strong>
+                            <p>Send join requests, get approvals, and start building together.</p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="about-visual reveal">
+                <div class="about-illustration">
+                    <!-- Animated team joining illustration -->
+                    <div class="illustration-card illus-card-1">
+                        <div class="illus-avatar" style="background: var(--red-100); color: var(--red-700);">M</div>
+                        <div class="illus-text">
+                            <div class="illus-name">Mohit G.</div>
+                            <div class="illus-role">Team Leader</div>
+                        </div>
+                        <div class="illus-badge illus-badge-green">●</div>
+                    </div>
+                    <div class="illustration-card illus-card-2">
+                        <div class="illus-avatar" style="background: var(--gray-100); color: var(--gray-700);">A</div>
+                        <div class="illus-text">
+                            <div class="illus-name">Alice S.</div>
+                            <div class="illus-role">Frontend Dev</div>
+                        </div>
+                        <div class="illus-badge illus-badge-blue">Joined ✓</div>
+                    </div>
+                    <div class="illustration-card illus-card-3">
+                        <div class="illus-avatar" style="background: var(--red-50); color: var(--red-600);">B</div>
+                        <div class="illus-text">
+                            <div class="illus-name">Bob K.</div>
+                            <div class="illus-role">ML Engineer</div>
+                        </div>
+                        <div class="illus-badge illus-badge-yellow">Pending...</div>
+                    </div>
+                    <!-- Connection lines -->
+                    <svg class="illus-connections" viewBox="0 0 300 280" fill="none">
+                        <path d="M150 50 C 150 100, 80 100, 80 140" stroke="var(--red-300)" stroke-width="2" stroke-dasharray="6 4" class="illus-line"/>
+                        <path d="M150 50 C 150 100, 220 100, 220 200" stroke="var(--red-200)" stroke-width="2" stroke-dasharray="6 4" class="illus-line illus-line-delay"/>
+                    </svg>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== HOW IT WORKS ========== -->
+    <section class="section bg-light" id="how-it-works">
+        <div class="section-header">
+            <div class="accent-bar"></div>
+            <h2>How It Works</h2>
+            <p>Three simple steps to get started with TeamForge.</p>
+        </div>
         <div class="grid-3">
-            <div class="card center">
-                <h3 class="text-red">01</h3>
-                <h4>Create your profile</h4>
-                <p>Add your skills and resume.</p>
+            <div class="step-card reveal">
+                <div class="step-number">01</div>
+                <h4>Create Your Profile</h4>
+                <p>Sign up with your Thapar ID, add your skills, GitHub, LinkedIn, and resume to stand out.</p>
             </div>
-            <div class="card center">
-                <h3 class="text-red">02</h3>
-                <h4>Find or create a team</h4>
-                <p>Browse open teams or start your own.</p>
+            <div class="step-card reveal">
+                <div class="step-number">02</div>
+                <h4>Find or Create a Team</h4>
+                <p>Browse open teams by hackathon or skills. Or start your own and recruit the right members.</p>
             </div>
-            <div class="card center">
-                <h3 class="text-red">03</h3>
-                <h4>Collaborate and build</h4>
-                <p>Approve requests and start working.</p>
+            <div class="step-card reveal">
+                <div class="step-number">03</div>
+                <h4>Collaborate &amp; Build</h4>
+                <p>Accept join requests, coordinate with your team, and build something amazing together.</p>
             </div>
         </div>
     </section>
-    <section class="section bg-light">
-        <h2>Features</h2>
+
+    <!-- ========== FEATURES ========== -->
+    <section class="section" id="features">
+        <div class="section-header">
+            <div class="accent-bar"></div>
+            <h2>Platform Features</h2>
+            <p>Everything you need to find the perfect team.</p>
+        </div>
         <div class="grid-4">
-            <div class="card center">Find Teams</div>
-            <div class="card center">Create Teams</div>
-            <div class="card center">Skill-Based Discovery</div>
-            <div class="card center">Hackathon-Based Filtering</div>
+            <div class="feature-card reveal">
+                <div class="feature-icon">🔎</div>
+                <h4>Find Teams</h4>
+                <p>Search and discover teams looking for your skills.</p>
+            </div>
+            <div class="feature-card reveal">
+                <div class="feature-icon">🛠️</div>
+                <h4>Create Teams</h4>
+                <p>Start a team, set capacity, and define required skills.</p>
+            </div>
+            <div class="feature-card reveal">
+                <div class="feature-icon">⚡</div>
+                <h4>Skill-Based Discovery</h4>
+                <p>Match with teams that need exactly what you offer.</p>
+            </div>
+            <div class="feature-card reveal">
+                <div class="feature-icon">🏆</div>
+                <h4>Hackathon Filtering</h4>
+                <p>Filter teams by specific hackathons and competitions.</p>
+            </div>
+            <div class="feature-card reveal">
+                <div class="feature-icon">📩</div>
+                <h4>Join Requests</h4>
+                <p>Send requests to team leaders and track your status.</p>
+            </div>
+            <div class="feature-card reveal">
+                <div class="feature-icon">✅</div>
+                <h4>Accept &amp; Manage</h4>
+                <p>Leaders can accept or reject requests with one click.</p>
+            </div>
+            <div class="feature-card reveal">
+                <div class="feature-icon">👤</div>
+                <h4>Student Profiles</h4>
+                <p>Showcase your skills, GitHub, LinkedIn, and portfolio.</p>
+            </div>
+            <div class="feature-card reveal">
+                <div class="feature-icon">🔒</div>
+                <h4>Thapar Exclusive</h4>
+                <p>Restricted to verified Thapar student accounts only.</p>
+            </div>
         </div>
     </section>
+
+    <!-- ========== TECH STACK ========== -->
+    <section class="section bg-light">
+        <div class="section-header">
+            <div class="accent-bar"></div>
+            <h2>Built With Modern Tech</h2>
+            <p>A robust, full-stack architecture powering TeamForge.</p>
+        </div>
+        <div class="grid-4">
+            <div class="card center reveal">
+                <h3 class="text-red" style="font-size:2rem">⟨/⟩</h3>
+                <h4>HTML / CSS / JS</h4>
+                <p class="text-muted">Responsive frontend</p>
+            </div>
+            <div class="card center reveal">
+                <h3 class="text-red" style="font-size:2rem">🟢</h3>
+                <h4>Node.js + Express</h4>
+                <p class="text-muted">RESTful backend API</p>
+            </div>
+            <div class="card center reveal">
+                <h3 class="text-red" style="font-size:2rem">🐬</h3>
+                <h4>MySQL</h4>
+                <p class="text-muted">Relational database</p>
+            </div>
+            <div class="card center reveal">
+                <h3 class="text-red" style="font-size:2rem">🔑</h3>
+                <h4>Google OAuth 2.0</h4>
+                <p class="text-muted">Secure authentication</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== TEAM MEMBERS ========== -->
+    <section class="section" id="team">
+        <div class="section-header">
+            <div class="accent-bar"></div>
+            <h2>Meet Our Team</h2>
+            <p>The minds behind TeamForge — TIET, Batch of 2028.</p>
+        </div>
+        <div class="grid-4">
+            <div class="team-member-card reveal">
+                <div class="member-avatar" style="background: linear-gradient(135deg, var(--red-600), var(--red-800));">MG</div>
+                <h4>Mohit Garg</h4>
+                <p class="member-roll">102024000</p>
+                <p class="text-muted">Full Stack Developer</p>
+            </div>
+            <div class="team-member-card reveal">
+                <div class="member-avatar" style="background: linear-gradient(135deg, var(--gray-700), var(--gray-900));">PS</div>
+                <h4>Paras Sharma</h4>
+                <p class="member-roll">102024XXX</p>
+                <p class="text-muted">Backend Developer</p>
+            </div>
+            <div class="team-member-card reveal">
+                <div class="member-avatar" style="background: linear-gradient(135deg, var(--red-500), var(--red-700));">PP</div>
+                <h4>Parv Panwar</h4>
+                <p class="member-roll">102024XXX</p>
+                <p class="text-muted">Frontend Developer</p>
+            </div>
+            <div class="team-member-card reveal">
+                <div class="member-avatar" style="background: linear-gradient(135deg, var(--gray-600), var(--gray-800));">MD</div>
+                <h4>Manan Dhingra</h4>
+                <p class="member-roll">102024XXX</p>
+                <p class="text-muted">Database &amp; Design</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== CTA ========== -->
+    <section class="cta-section">
+        <div class="cta-content">
+            <h2>Ready to Find Your Team?</h2>
+            <p>Join TeamForge today and start building your next big project.</p>
+            <div class="hero-actions" style="margin-top:2rem">
+                <a href="pages/register.html" class="btn-hero btn-hero-primary">Create Account →</a>
+                <a href="pages/login.html" class="btn-hero btn-hero-outline">Login</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== FOOTER ========== -->
     <footer class="footer">
-        <p>Project Team Matcher</p>
-        <p>Thapar Institute of Engineering & Technology</p>
+        <div class="footer-brand">Team<span>Forge</span></div>
+        <p>A Project by Students of Thapar Institute of Engineering &amp; Technology</p>
+        <div class="footer-divider"></div>
+        <div class="footer-links">
+            <a href="#about">About</a>
+            <a href="#features">Features</a>
+            <a href="#team">Team</a>
+            <a href="pages/login.html">Login</a>
+        </div>
+        <p style="margin-top:1.5rem; font-size:0.8rem; color:var(--gray-500);">© 2025 TeamForge — TIET. All rights reserved.</p>
     </footer>
+
     <script src="js/main.js"></script>
 </body>
 

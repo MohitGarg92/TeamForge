@@ -2,24 +2,37 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Create Team</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Team - TeamForge</title>
     <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
-    <nav class="navbar">
-        <div class="nav-brand">Project Team Matcher</div>
-        <div class="nav-links"><a href="dashboard.html">Dashboard</a></div>
+    <nav class="navbar" id="mainNav">
+        <div class="nav-brand">TeamForge</div>
+        <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
+            <span></span><span></span><span></span>
+        </button>
+        <div class="nav-links" id="navLinks">
+            <a href="dashboard.html">Dashboard</a>
+            <a href="available-teams.html">Browse Teams</a>
+            <a href="my-teams.html">My Teams</a>
+            <a href="profile.html">Profile</a>
+            <a href="#" id="logoutBtn" class="btn-nav-outline">Logout</a>
+        </div>
     </nav>
     <div class="container section">
-        <h2>Create a New Team</h2>
+        <div class="page-header">
+            <h2>🚀 Create a New Team</h2>
+            <p>Set up your team and start recruiting members.</p>
+        </div>
         <div class="card mt-1">
             <form id="createTeamForm">
-                <div class="form-group"><label>Team Name</label><input type="text" id="tName" required></div>
-                <div class="form-group"><label>Project Description</label><textarea id="tDesc" required></textarea></div>
+                <div class="form-group"><label>Team Name</label><input type="text" id="tName" required placeholder="e.g. Smart Campus"></div>
+                <div class="form-group"><label>Project Description</label><textarea id="tDesc" required placeholder="Describe what your team will build..."></textarea></div>
                 <div class="form-group"><label>Hackathon</label><input type="text" id="tHack" required placeholder="e.g. Hack4Good"></div>
-                <div class="form-group"><label>Required Capacity</label><input type="number" id="tCap" required min="2" max="10"></div>
+                <div class="form-group"><label>Required Capacity</label><input type="number" id="tCap" required min="2" max="10" placeholder="2–10 members"></div>
                 <div class="form-group"><label>Required Skills (comma separated)</label><input type="text" id="tSkills" required placeholder="JavaScript, Python, SQL"></div>
-                <button type="submit" class="btn-primary mt-1">Create Team</button>
+                <button type="submit" class="btn-primary mt-1">Create Team →</button>
             </form>
         </div>
     </div>

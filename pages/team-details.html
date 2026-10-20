@@ -2,16 +2,27 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Team Details</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Team Details - TeamForge</title>
     <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
-    <nav class="navbar">
-        <div class="nav-brand">Project Team Matcher</div>
-        <div class="nav-links"><a href="dashboard.html">Dashboard</a><a href="available-teams.html">Teams</a></div>
+    <nav class="navbar" id="mainNav">
+        <div class="nav-brand">TeamForge</div>
+        <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
+            <span></span><span></span><span></span>
+        </button>
+        <div class="nav-links" id="navLinks">
+            <a href="dashboard.html">Dashboard</a>
+            <a href="available-teams.html">Browse Teams</a>
+            <a href="my-teams.html">My Teams</a>
+            <a href="my-requests.html">My Requests</a>
+            <a href="profile.html">Profile</a>
+            <a href="#" id="logoutBtn" class="btn-nav-outline">Logout</a>
+        </div>
     </nav>
     <div class="container section">
-        <div class="card" id="teamDetails">
+        <div class="profile-card" id="teamDetails">
             <!-- Populated by JS -->
         </div>
     </div>
