@@ -1,1 +1,155 @@
-.auth-container { min-height: 80vh; display: flex; align-items: center; justify-content: center; } .auth-card { width: 100%; max-width: 400px; } .auth-container.large .auth-card { max-width: 600px; }
+/* auth.css – Modern authentication styling & Demo Login Pills */
+
+.auth-container {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem 1rem;
+    background: radial-gradient(circle at 10% 20%, rgba(220, 38, 38, 0.05) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(15, 23, 42, 0.04) 0%, transparent 40%),
+                var(--gray-50);
+}
+
+.auth-card {
+    width: 100%;
+    max-width: 440px;
+    background: #ffffff;
+    border-radius: var(--radius-lg);
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.08), 0 8px 10px -6px rgba(0, 0, 0, 0.04);
+    border: 1px solid var(--gray-200);
+    padding: 2.25rem 2rem;
+    transition: transform var(--transition-normal);
+}
+
+.auth-container.large .auth-card {
+    max-width: 580px;
+}
+
+/* Demo Quick Login Box */
+.demo-box {
+    background: #f8fafc;
+    border: 1px dashed #cbd5e1;
+    border-radius: var(--radius-md);
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.demo-title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--gray-700);
+    margin-bottom: 0.75rem;
+}
+
+.demo-badge {
+    background: #fef2f2;
+    color: var(--primary-red);
+    font-size: 0.7rem;
+    padding: 0.15rem 0.5rem;
+    border-radius: var(--radius-full);
+    border: 1px solid #fecaca;
+}
+
+.demo-chips {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.demo-chip {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.6rem 0.8rem;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    text-align: left;
+    transition: all var(--transition-fast);
+    font-family: inherit;
+    width: 100%;
+}
+
+.demo-chip:hover {
+    border-color: var(--primary-red);
+    background: #fef2f2;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(220, 38, 38, 0.1);
+}
+
+.demo-chip-avatar {
+    font-size: 1.25rem;
+    margin-right: 0.6rem;
+}
+
+.demo-chip-info {
+    flex: 1;
+}
+
+.demo-chip-name {
+    font-weight: 600;
+    font-size: 0.85rem;
+    color: var(--gray-900);
+    display: block;
+}
+
+.demo-chip-role {
+    font-size: 0.75rem;
+    color: var(--gray-500);
+    display: block;
+}
+
+.demo-chip-action {
+    font-size: 0.75rem;
+    color: var(--primary-red);
+    font-weight: 600;
+}
+
+.auth-divider {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    margin: 1.25rem 0;
+    color: var(--gray-400);
+    font-size: 0.8rem;
+    font-weight: 500;
+    text-transform: uppercase;
+}
+
+.auth-divider::before,
+.auth-divider::after {
+    content: '';
+    flex: 1;
+    border-bottom: 1px solid var(--gray-200);
+}
+
+.auth-divider::before {
+    margin-right: 0.75rem;
+}
+
+.auth-divider::after {
+    margin-left: 0.75rem;
+}
+
+.back-to-home {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    color: var(--gray-500);
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 500;
+    margin-bottom: 1.25rem;
+    transition: color var(--transition-fast);
+}
+
+.back-to-home:hover {
+    color: var(--primary-red);
+}

@@ -25,7 +25,12 @@
     <div class="container section">
         <!-- Welcome Banner -->
         <div class="welcome-section">
-            <div class="thapar-badge" style="margin-bottom:1rem">🎓 THAPAR INSTITUTE</div>
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem; flex-wrap:wrap; gap:0.5rem;">
+                <div class="thapar-badge">🎓 THAPAR INSTITUTE</div>
+                <button type="button" onclick="resetDemoData(); alert('Demo data reset to fresh state! Parv\'s request is pending again.'); window.location.reload();" class="btn-outline" style="font-size:0.75rem; padding:0.25rem 0.65rem; background:#fff; border-color:#e2e8f0; cursor:pointer;">
+                    🔄 Reset Demo State
+                </button>
+            </div>
             <h1 id="welcomeUser">Welcome</h1>
             <p>Find a team or create one for your next project. Let's build something amazing.</p>
         </div>

@@ -1,9 +1,46 @@
 // main.js – Core API helpers (localStorage-based until backend is fully wired)
 
 const api = {
-    getData: () => JSON.parse(localStorage.getItem("ptm_data")),
+    getData: () => {
+        let raw = localStorage.getItem("ptm_data");
+        if (!raw) {
+            if (typeof defaultMockData !== 'undefined') {
+                localStorage.setItem("ptm_data", JSON.stringify(defaultMockData));
+                return defaultMockData;
+            }
+            return { students: [], teams: [], requests: [] };
+        }
+        try {
+            let data = JSON.parse(raw);
+            const isStale = !data.students || data.students.some(s => 
+                s.name.includes("Alice") || 
+                s.name.includes("Demo") || 
+                s.studentId === "102024000" ||
+                s.studentId === "102024001"
+            );
+            if (isStale && typeof defaultMockData !== 'undefined') {
+                localStorage.setItem("ptm_data", JSON.stringify(defaultMockData));
+                localStorage.setItem("ptm_version", "teamforge_v5");
+                return defaultMockData;
+            }
+            return data;
+        } catch (e) {
+            if (typeof defaultMockData !== 'undefined') {
+                localStorage.setItem("ptm_data", JSON.stringify(defaultMockData));
+                return defaultMockData;
+            }
+            return { students: [], teams: [], requests: [] };
+        }
+    },
     saveData: (data) => localStorage.setItem("ptm_data", JSON.stringify(data)),
-    getCurrentUser: () => localStorage.getItem("loggedInUser"),
+    getCurrentUser: () => {
+        let curr = localStorage.getItem("loggedInUser");
+        if (!curr || !["1024031006", "1024030609", "1024030222", "1024030226"].includes(curr)) {
+            curr = "1024031006"; // Default to Mohit Garg
+            localStorage.setItem("loggedInUser", curr);
+        }
+        return curr;
+    },
     login: (studentId) => {
         localStorage.setItem("loggedInUser", studentId);
     },
@@ -17,8 +54,9 @@ const api = {
         }
     },
     requireAuth: () => {
-        if (!api.getCurrentUser()) {
-            window.location.href = "login.html";
+        let curr = localStorage.getItem("loggedInUser");
+        if (!curr || !["1024031006", "1024030609", "1024030222", "1024030226"].includes(curr)) {
+            localStorage.setItem("loggedInUser", "1024031006"); // Set Mohit Garg as active
         }
     }
 };

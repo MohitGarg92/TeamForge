@@ -10,23 +10,77 @@
 <body class="bg-light">
     <div class="auth-container">
         <div class="card auth-card">
+            <!-- Go Back Button -->
+            <button type="button" onclick="window.history.length > 1 ? window.history.back() : window.location.href='../index.html'" class="btn-back">
+                <span class="arrow">←</span> Go Back
+            </button>
+            
             <div class="text-center" style="margin-bottom:1.5rem">
-                <div class="nav-brand" style="justify-content:center; font-size:1.5rem; margin-bottom:0.5rem">TeamForge</div>
-                <p class="text-muted">Sign in to your account</p>
+                <div class="nav-brand" style="justify-content:center; font-size:1.6rem; margin-bottom:0.25rem">
+                    Team<span>Forge</span>
+                </div>
+                <p class="text-muted" style="font-size:0.9rem">Sign in to your student account</p>
             </div>
+
+            <!-- Demo Quick Login Box -->
+            <div class="demo-box">
+                <div class="demo-title">
+                    <span>⚡ Quick Demo Login</span>
+                    <div style="display:flex; gap:0.4rem; align-items:center;">
+                        <span class="demo-badge">Presentation Mode</span>
+                        <button type="button" onclick="resetDemoData(); alert('Demo state reset! Parv\'s request is pending.');" style="background:none; border:none; font-size:0.75rem; color:var(--primary-red); cursor:pointer; text-decoration:underline;">🔄 Reset</button>
+                    </div>
+                </div>
+                <div class="demo-chips">
+                    <button type="button" class="demo-chip" onclick="quickLogin('1024031006')">
+                        <span class="demo-chip-avatar">👨‍💻</span>
+                        <div class="demo-chip-info">
+                            <span class="demo-chip-name">Mohit Garg</span>
+                            <span class="demo-chip-role">Full Stack &bull; 1024031006</span>
+                        </div>
+                        <span class="demo-chip-action">Sign In →</span>
+                    </button>
+                    <button type="button" class="demo-chip" onclick="quickLogin('1024030609')">
+                        <span class="demo-chip-avatar">👨‍💻</span>
+                        <div class="demo-chip-info">
+                            <span class="demo-chip-name">Paras Sharma</span>
+                            <span class="demo-chip-role">Backend Dev &bull; 1024030609</span>
+                        </div>
+                        <span class="demo-chip-action">Sign In →</span>
+                    </button>
+                    <button type="button" class="demo-chip" onclick="quickLogin('1024030222')">
+                        <span class="demo-chip-avatar">👨‍💻</span>
+                        <div class="demo-chip-info">
+                            <span class="demo-chip-name">Manan Dhingra</span>
+                            <span class="demo-chip-role">Database &amp; UI &bull; 1024030222</span>
+                        </div>
+                        <span class="demo-chip-action">Sign In →</span>
+                    </button>
+                    <button type="button" class="demo-chip" onclick="quickLogin('1024030226')">
+                        <span class="demo-chip-avatar">👨‍💻</span>
+                        <div class="demo-chip-info">
+                            <span class="demo-chip-name">Parv Panwar</span>
+                            <span class="demo-chip-role">ML &amp; Frontend &bull; 1024030226</span>
+                        </div>
+                        <span class="demo-chip-action">Sign In →</span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="auth-divider">or enter student id</div>
+
             <form id="loginForm">
                 <div class="form-group">
                     <label>Student ID</label>
-                    <input type="text" id="studentId" required placeholder="e.g. 102024000">
+                    <input type="text" id="studentId" required placeholder="e.g. 1024031006">
                 </div>
                 <div class="form-group">
-                    <label>Password</label>
-                    <input type="password" id="password" placeholder="Enter your password">
+                    <label>Password <span class="text-muted" style="font-weight:normal; font-size:0.8rem">(Optional in demo)</span></label>
+                    <input type="password" id="password" placeholder="Any password">
                 </div>
-                <button type="submit" class="btn-primary w-100">Login</button>
-                <div class="text-center mt-1" style="font-size:0.9rem">
-                    <a href="#" class="text-red">Forgot Password?</a><br>
-                    <a href="register.html" style="margin-top:0.5rem; display:inline-block">Don't have an account? <strong class="text-red">Register</strong></a>
+                <button type="submit" class="btn-primary w-100">Sign In to Dashboard →</button>
+                <div class="text-center mt-1" style="font-size:0.85rem">
+                    <a href="register.html" style="margin-top:0.75rem; display:inline-block">Don't have an account? <strong class="text-red">Register New Student</strong></a>
                 </div>
             </form>
         </div>

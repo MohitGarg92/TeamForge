@@ -16,11 +16,15 @@
             <a href="dashboard.html">Dashboard</a>
             <a href="available-teams.html">Browse Teams</a>
             <a href="my-teams.html">My Teams</a>
+            <a href="my-requests.html">My Requests</a>
             <a href="profile.html">Profile</a>
             <a href="#" id="logoutBtn" class="btn-nav-outline">Logout</a>
         </div>
     </nav>
     <div class="container section">
+        <button type="button" onclick="window.history.length > 1 ? window.history.back() : window.location.href='dashboard.html'" class="btn-back">
+            <span class="arrow">←</span> Go Back
+        </button>
         <div class="page-header">
             <h2>🚀 Create a New Team</h2>
             <p>Set up your team and start recruiting members.</p>

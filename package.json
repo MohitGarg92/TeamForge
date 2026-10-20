@@ -1,0 +1,19 @@
+{
+  "name": "teamforge",
+  "version": "1.0.0",
+  "description": "TeamForge - Project Team Matcher for Thapar Students",
+  "main": "index.html",
+  "scripts": {
+    "start": "python3 -m http.server 8000",
+    "serve": "npx -y serve . -l 8000",
+    "backend": "cd backend && npm run dev"
+  },
+  "keywords": [
+    "teamforge",
+    "thapar",
+    "hackathon",
+    "teammate-finder"
+  ],
+  "author": "TeamForge",
+  "license": "MIT"
+}
