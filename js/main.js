@@ -1,68 +1,134 @@
-// main.js – Core API helpers (localStorage-based until backend is fully wired)
+// Use the same origin unless running the legacy local static frontend.
+const API_BASE = document.querySelector('meta[name="teamforge-api"]')?.content ||
+    (window.location.hostname === 'localhost' && window.location.port === '5500' ? 'http://localhost:3000' : '');
+
+// Pages anyone can open without logging in
+// Match login.html or /login (some dev servers strip .html)
+const isPublicPage =
+    !window.location.pathname.includes('/pages/') ||
+    /\/login(\.html)?$/.test(window.location.pathname);
+
+// Hide protected pages until login is confirmed (avoids a flash of content)
+if (!isPublicPage) document.documentElement.style.visibility = 'hidden';
 
 const api = {
-    getData: () => {
-        let raw = localStorage.getItem("ptm_data");
-        if (!raw) {
-            if (typeof defaultMockData !== 'undefined') {
-                localStorage.setItem("ptm_data", JSON.stringify(defaultMockData));
-                return defaultMockData;
-            }
-            return { students: [], teams: [], requests: [] };
+    user: null,
+    _auth: null,
+
+    request: async (path, { method = 'GET', body } = {}) => {
+        const options = { method, credentials: 'include' };
+        if (body !== undefined) {
+            options.headers = { 'Content-Type': 'application/json' };
+            options.body = JSON.stringify(body);
         }
+        let response;
         try {
-            let data = JSON.parse(raw);
-            const isStale = !data.students || data.students.some(s => 
-                s.name.includes("Alice") || 
-                s.name.includes("Demo") || 
-                s.studentId === "102024000" ||
-                s.studentId === "102024001"
-            );
-            if (isStale && typeof defaultMockData !== 'undefined') {
-                localStorage.setItem("ptm_data", JSON.stringify(defaultMockData));
-                localStorage.setItem("ptm_version", "teamforge_v5");
-                return defaultMockData;
-            }
-            return data;
-        } catch (e) {
-            if (typeof defaultMockData !== 'undefined') {
-                localStorage.setItem("ptm_data", JSON.stringify(defaultMockData));
-                return defaultMockData;
-            }
-            return { students: [], teams: [], requests: [] };
+            response = await fetch(`${API_BASE}/api${path}`, options);
+        } catch {
+            throw new Error('Could not reach TeamForge. Please try again.');
         }
-    },
-    saveData: (data) => localStorage.setItem("ptm_data", JSON.stringify(data)),
-    getCurrentUser: () => {
-        let curr = localStorage.getItem("loggedInUser");
-        if (!curr || !["1024031006", "1024030609", "1024030222", "1024030226"].includes(curr)) {
-            curr = "1024031006"; // Default to Mohit Garg
-            localStorage.setItem("loggedInUser", curr);
+        if (response.status === 401 && !isPublicPage) api.goToLogin();
+        if (response.status === 204) return;
+        const result = await response.json().catch(() => null);
+        if (!response.ok) {
+            const error = new Error(result?.error || 'The request failed. Please try again.');
+            error.code = result?.code;
+            throw error;
         }
-        return curr;
+        if (result === null) throw new Error('TeamForge returned an unexpected response. Please try again.');
+        return result;
     },
-    login: (studentId) => {
-        localStorage.setItem("loggedInUser", studentId);
+
+    goToLogin: () => {
+        window.location.href = window.location.pathname.includes('/pages/')
+            ? 'login.html'
+            : 'pages/login.html';
     },
-    logout: () => {
-        localStorage.removeItem("loggedInUser");
-        // Navigate to home – works from both /pages/ and root
-        if (window.location.pathname.includes('/pages/')) {
-            window.location.href = "../index.html";
-        } else {
-            window.location.href = "index.html";
-        }
-    },
+
+    // Asks the backend who is logged in; sends visitors to the login page if nobody is
     requireAuth: () => {
-        let curr = localStorage.getItem("loggedInUser");
-        if (!curr || !["1024031006", "1024030609", "1024030222", "1024030226"].includes(curr)) {
-            localStorage.setItem("loggedInUser", "1024031006"); // Set Mohit Garg as active
+        if (!api._auth) {
+            api._auth = (async () => {
+                try {
+                    api.user = await api.request('/auth/me');
+                    document.documentElement.style.visibility = '';
+                    const welcome = document.getElementById('welcomeUser');
+                    if (welcome) welcome.innerText = `Welcome, ${api.user.full_name}`;
+                    return api.user;
+                } catch (e) {
+                    document.documentElement.style.visibility = '';
+                    const main = document.querySelector('.section');
+                    if (main) {
+                        const notice = document.createElement('div');
+                        showPageMessage(notice, e.message, true);
+                        main.prepend(notice);
+                    }
+                    return null;
+                }
+            })();
         }
+        return api._auth;
+    },
+
+    logout: async () => {
+        try {
+            await api.request('/auth/logout');
+        } catch (error) {
+            window.alert(error.message);
+            return;
+        }
+        window.location.href = window.location.pathname.includes('/pages/')
+            ? '../index.html'
+            : 'index.html';
     }
 };
 
+function escapeHtml(value) {
+    const element = document.createElement('span');
+    element.textContent = value ?? '';
+    return element.innerHTML.replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+}
+
+function safeLink(value, label) {
+    if (!value) return '';
+    try {
+        const url = new URL(value);
+        if (!['http:', 'https:'].includes(url.protocol)) return '';
+        return `<a class="text-red" href="${escapeHtml(url.href)}" target="_blank" rel="noopener noreferrer">${escapeHtml(label)}</a>`;
+    } catch {
+        return '';
+    }
+}
+
+function skillTags(skills) {
+    return skills.map(skill => `<span class="tag">${escapeHtml(skill)}</span>`).join('');
+}
+
+function requestStatus(status) {
+    const labels = { pending: 'Pending', accepted: 'Accepted', rejected: 'Rejected' };
+    return labels[status] || '';
+}
+
+function teamDetailsUrl(teamId) {
+    // Static servers can strip the query when redirecting an .html URL.
+    return `team-details.html#id=${encodeURIComponent(teamId)}`;
+}
+
+function completeProfileUrl(teamId) {
+    return teamId ? `edit-profile.html#next=team&id=${encodeURIComponent(teamId)}` : 'edit-profile.html#next=create-team';
+}
+
+function showPageMessage(container, message, isError = false) {
+    const paragraph = document.createElement('p');
+    paragraph.className = isError ? 'text-red' : 'text-muted';
+    paragraph.setAttribute('role', isError ? 'alert' : 'status');
+    paragraph.textContent = message;
+    container.replaceChildren(paragraph);
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     // Logout button handler
+    if (!isPublicPage) api.requireAuth();
     const logoutBtn = document.getElementById('logoutBtn');
     if (logoutBtn) {
         logoutBtn.addEventListener('click', (e) => {

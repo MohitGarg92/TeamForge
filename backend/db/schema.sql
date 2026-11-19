@@ -1,9 +1,6 @@
 -- schema.sql – Database schema for Project Team Matcher
 -- Run this script after creating the MySQL database `teammatcher`
 
--- ---------------------------------------------------
--- Table: students
--- ---------------------------------------------------
 CREATE TABLE IF NOT EXISTS students (
   id INT AUTO_INCREMENT PRIMARY KEY,
   google_id VARCHAR(255) UNIQUE NOT NULL,
@@ -18,17 +15,11 @@ CREATE TABLE IF NOT EXISTS students (
   updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB;
 
--- ---------------------------------------------------
--- Table: skills (master list of possible skills)
--- ---------------------------------------------------
 CREATE TABLE IF NOT EXISTS skills (
   id INT AUTO_INCREMENT PRIMARY KEY,
   name VARCHAR(100) NOT NULL UNIQUE
 ) ENGINE=InnoDB;
 
--- ---------------------------------------------------
--- Table: student_skills (many‑to‑many between students and skills)
--- ---------------------------------------------------
 CREATE TABLE IF NOT EXISTS student_skills (
   student_id INT NOT NULL,
   skill_id INT NOT NULL,
@@ -37,9 +28,6 @@ CREATE TABLE IF NOT EXISTS student_skills (
   FOREIGN KEY (skill_id) REFERENCES skills(id) ON DELETE CASCADE
 ) ENGINE=InnoDB;
 
--- ---------------------------------------------------
--- Table: hackathons
--- ---------------------------------------------------
 CREATE TABLE IF NOT EXISTS hackathons (
   id INT AUTO_INCREMENT PRIMARY KEY,
   name VARCHAR(255) NOT NULL UNIQUE,
@@ -48,9 +36,6 @@ CREATE TABLE IF NOT EXISTS hackathons (
   end_date DATE NULL
 ) ENGINE=InnoDB;
 
--- ---------------------------------------------------
--- Table: teams
--- ---------------------------------------------------
 CREATE TABLE IF NOT EXISTS teams (
   id INT AUTO_INCREMENT PRIMARY KEY,
   name VARCHAR(255) NOT NULL,
@@ -64,9 +49,6 @@ CREATE TABLE IF NOT EXISTS teams (
   FOREIGN KEY (leader_id) REFERENCES students(id) ON DELETE RESTRICT
 ) ENGINE=InnoDB;
 
--- ---------------------------------------------------
--- Table: team_hackathons (many‑to‑many between teams and hackathons)
--- ---------------------------------------------------
 CREATE TABLE IF NOT EXISTS team_hackathons (
   team_id INT NOT NULL,
   hackathon_id INT NOT NULL,

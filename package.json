@@ -4,9 +4,9 @@
   "description": "TeamForge - Project Team Matcher for Thapar Students",
   "main": "index.html",
   "scripts": {
-    "start": "python3 -m http.server 8000",
-    "serve": "npx -y serve . -l 8000",
-    "backend": "cd backend && npm run dev"
+    "start": "npm --prefix backend start",
+    "serve": "npm start",
+    "backend": "npm --prefix backend run dev"
   },
   "keywords": [
     "teamforge",

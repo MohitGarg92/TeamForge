@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Team Details - TeamForge</title>
     <link rel="stylesheet" href="../css/style.css">
 </head>
+
 <body>
     <nav class="navbar" id="mainNav">
         <div class="nav-brand">TeamForge</div>
@@ -22,15 +24,17 @@
         </div>
     </nav>
     <div class="container section">
-        <button type="button" onclick="window.history.length > 1 ? window.history.back() : window.location.href='available-teams.html'" class="btn-back">
+        <button type="button"
+            onclick="window.history.length > 1 ? window.history.back() : window.location.href='available-teams.html'"
+            class="btn-back">
             <span class="arrow">←</span> Go Back
         </button>
         <div class="profile-card" id="teamDetails">
             <!-- Populated by JS -->
         </div>
     </div>
-    <script src="../js/mock-data.js"></script>
     <script src="../js/main.js"></script>
     <script src="../js/team-details.js"></script>
 </body>
+
 </html>

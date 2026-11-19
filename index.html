@@ -4,7 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="TeamForge — A Thapar-only platform to discover teams, find teammates, and collaborate on hackathons and academic projects.">
+    <meta name="description"
+        content="TeamForge — A Thapar-only platform to discover teams, find teammates, and collaborate on hackathons and academic projects.">
     <title>TeamForge | Thapar Institute</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/responsive.css">
@@ -22,8 +23,7 @@
             <a href="#about">About</a>
             <a href="#features">Features</a>
             <a href="#team">Team</a>
-            <a href="pages/login.html" class="btn-nav-outline">Login</a>
-            <a href="pages/register.html" class="btn-nav">Get Started</a>
+            <a href="pages/login.html" class="btn-nav">Login</a>
         </div>
     </nav>
 
@@ -32,9 +32,10 @@
         <div class="hero-content">
             <div class="hero-badge">🎓 Built for Thapar Students</div>
             <h1>Find the Right Team.<br><span>Build Something Great.</span></h1>
-            <p>A Thapar-only platform to discover teams, find teammates, and collaborate on projects and hackathons — all in one place.</p>
+            <p>A Thapar-only platform to discover teams, find teammates, and collaborate on projects and hackathons —
+                all in one place.</p>
             <div class="hero-actions">
-                <a href="pages/register.html" class="btn-hero btn-hero-primary">Get Started →</a>
+                <a href="pages/login.html" class="btn-hero btn-hero-primary">Get Started →</a>
                 <a href="#about" class="btn-hero btn-hero-outline">Learn More</a>
             </div>
         </div>
@@ -49,21 +50,22 @@
     <!-- ========== STATS BAR ========== -->
     <section class="stats-bar">
         <div class="stat-item animate-fade-up">
-            <h3>50+</h3>
-            <p>Active Students</p>
+            <h3 data-stat="registered_students">—</h3>
+            <p>Registered Students</p>
         </div>
         <div class="stat-item animate-fade-up-delay-1">
-            <h3>20+</h3>
-            <p>Teams Formed</p>
+            <h3 data-stat="active_teams">—</h3>
+            <p>Active Teams</p>
         </div>
         <div class="stat-item animate-fade-up-delay-2">
-            <h3>5+</h3>
+            <h3 data-stat="hackathons">—</h3>
             <p>Hackathons</p>
         </div>
         <div class="stat-item animate-fade-up-delay-3">
-            <h3>100%</h3>
-            <p>Free to Use</p>
+            <h3 data-stat="total_teams">—</h3>
+            <p>Total Teams</p>
         </div>
+        <p id="statsFeedback" class="text-muted" role="status" hidden></p>
     </section>
 
     <!-- ========== ABOUT ========== -->
@@ -76,7 +78,10 @@
                     <p style="margin:0">The smart way to build your dream team at Thapar.</p>
                 </div>
                 <p class="about-description">
-                    TeamForge is a dedicated team-formation platform designed exclusively for students of <strong>Thapar Institute of Engineering &amp; Technology</strong>. Whether you're gearing up for a hackathon, starting an academic project, or looking for collaborators for a competition — TeamForge makes it effortless.
+                    TeamForge is a dedicated team-formation platform designed exclusively for students of <strong>Thapar
+                        Institute of Engineering &amp; Technology</strong>. Whether you're gearing up for a hackathon,
+                    starting an academic project, or looking for collaborators for a competition — TeamForge makes it
+                    effortless.
                 </p>
                 <ul class="about-highlights">
                     <li>
@@ -131,8 +136,10 @@
                     </div>
                     <!-- Connection lines -->
                     <svg class="illus-connections" viewBox="0 0 300 280" fill="none">
-                        <path d="M150 50 C 150 100, 80 100, 80 140" stroke="var(--red-300)" stroke-width="2" stroke-dasharray="6 4" class="illus-line"/>
-                        <path d="M150 50 C 150 100, 220 100, 220 200" stroke="var(--red-200)" stroke-width="2" stroke-dasharray="6 4" class="illus-line illus-line-delay"/>
+                        <path d="M150 50 C 150 100, 80 100, 80 140" stroke="var(--red-300)" stroke-width="2"
+                            stroke-dasharray="6 4" class="illus-line" />
+                        <path d="M150 50 C 150 100, 220 100, 220 200" stroke="var(--red-200)" stroke-width="2"
+                            stroke-dasharray="6 4" class="illus-line illus-line-delay" />
                     </svg>
                 </div>
             </div>
@@ -256,25 +263,29 @@
         </div>
         <div class="grid-4">
             <div class="team-member-card reveal">
-                <div class="member-avatar" style="background: linear-gradient(135deg, var(--red-600), var(--red-800));">MG</div>
+                <div class="member-avatar" style="background: linear-gradient(135deg, var(--red-600), var(--red-800));">
+                    MG</div>
                 <h4>Mohit Garg</h4>
                 <p class="member-roll">1024031006</p>
                 <p class="text-muted">Full Stack Developer</p>
             </div>
             <div class="team-member-card reveal">
-                <div class="member-avatar" style="background: linear-gradient(135deg, var(--gray-700), var(--gray-900));">PS</div>
+                <div class="member-avatar"
+                    style="background: linear-gradient(135deg, var(--gray-700), var(--gray-900));">PS</div>
                 <h4>Paras Sharma</h4>
                 <p class="member-roll">1024030609</p>
                 <p class="text-muted">Backend Developer</p>
             </div>
             <div class="team-member-card reveal">
-                <div class="member-avatar" style="background: linear-gradient(135deg, var(--red-500), var(--red-700));">PP</div>
+                <div class="member-avatar" style="background: linear-gradient(135deg, var(--red-500), var(--red-700));">
+                    PP</div>
                 <h4>Parv Panwar</h4>
                 <p class="member-roll">1024030226</p>
                 <p class="text-muted">Frontend Developer</p>
             </div>
             <div class="team-member-card reveal">
-                <div class="member-avatar" style="background: linear-gradient(135deg, var(--gray-600), var(--gray-800));">MD</div>
+                <div class="member-avatar"
+                    style="background: linear-gradient(135deg, var(--gray-600), var(--gray-800));">MD</div>
                 <h4>Manan Dhingra</h4>
                 <p class="member-roll">1024030222</p>
                 <p class="text-muted">Database &amp; Design</p>
@@ -288,8 +299,7 @@
             <h2>Ready to Find Your Team?</h2>
             <p>Join TeamForge today and start building your next big project.</p>
             <div class="hero-actions" style="margin-top:2rem">
-                <a href="pages/register.html" class="btn-hero btn-hero-primary">Create Account →</a>
-                <a href="pages/login.html" class="btn-hero btn-hero-outline">Login</a>
+                <a href="pages/login.html" class="btn-hero btn-hero-primary">Get Started →</a>
             </div>
         </div>
     </section>
@@ -305,11 +315,12 @@
             <a href="#team">Team</a>
             <a href="pages/login.html">Login</a>
         </div>
-        <p style="margin-top:1.5rem; font-size:0.8rem; color:var(--gray-500);">© 2025 TeamForge — TIET. All rights reserved.</p>
+        <p style="margin-top:1.5rem; font-size:0.8rem; color:var(--gray-500);">© 2025 TeamForge — TIET. All rights
+            reserved.</p>
     </footer>
 
-    <script src="js/mock-data.js"></script>
     <script src="js/main.js"></script>
+    <script src="js/stats.js"></script>
 </body>
 
 </html>

@@ -1613,3 +1613,31 @@ button:disabled, .btn-primary:disabled, .btn-secondary:disabled {
 }
 
 
+
+form fieldset {
+    border: 0;
+    margin: 0;
+    min-width: 0;
+    padding: 0;
+}
+
+.team-card-badges {
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.team-card p,
+#teamDetails p {
+    overflow-wrap: anywhere;
+}
+
+.team-roster {
+    padding-left: 1.25rem;
+}
+
+[hidden] {
+    display: none !important;
+}

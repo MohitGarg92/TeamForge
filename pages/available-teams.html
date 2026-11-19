@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Available Teams - TeamForge</title>
     <link rel="stylesheet" href="../css/style.css">
 </head>
+
 <body>
     <nav class="navbar" id="mainNav">
         <div class="nav-brand">TeamForge</div>
@@ -22,7 +24,9 @@
         </div>
     </nav>
     <div class="container section">
-        <button type="button" onclick="window.history.length > 1 ? window.history.back() : window.location.href='dashboard.html'" class="btn-back">
+        <button type="button"
+            onclick="window.history.length > 1 ? window.history.back() : window.location.href='dashboard.html'"
+            class="btn-back">
             <span class="arrow">←</span> Go Back
         </button>
         <div class="page-header">
@@ -30,18 +34,15 @@
             <p>Browse open teams and find one that matches your skills.</p>
         </div>
         <div class="filters card mt-1">
-            <input type="text" id="searchTeam" placeholder="Search by name, skill, or description...">
-            <select id="filterHackathon">
-                <option value="all">All Hackathons</option>
-                <option value="Hack4Good">Hack4Good</option>
-                <option value="AI Innovation Challenge">AI Innovation Challenge</option>
+            <input type="search" id="searchTeam" aria-label="Search teams" placeholder="Search by project, skill, or description...">
+            <select id="filterHackathon" aria-label="Filter by hackathon">
+                <option value="">All Hackathons</option>
             </select>
-            <button class="btn-outline" onclick="filterTeams()">Apply Filters</button>
         </div>
         <div id="teamsList" class="grid-3 mt-2"></div>
     </div>
-    <script src="../js/mock-data.js"></script>
     <script src="../js/main.js"></script>
     <script src="../js/teams.js"></script>
 </body>
+
 </html>

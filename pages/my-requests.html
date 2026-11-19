@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Requests - TeamForge</title>
     <link rel="stylesheet" href="../css/style.css">
 </head>
+
 <body>
     <nav class="navbar" id="mainNav">
         <div class="nav-brand">TeamForge</div>
@@ -22,7 +24,9 @@
         </div>
     </nav>
     <div class="container section">
-        <button type="button" onclick="window.history.length > 1 ? window.history.back() : window.location.href='dashboard.html'" class="btn-back">
+        <button type="button"
+            onclick="window.history.length > 1 ? window.history.back() : window.location.href='dashboard.html'"
+            class="btn-back">
             <span class="arrow">←</span> Go Back
         </button>
         <div class="page-header">
@@ -31,36 +35,8 @@
         </div>
         <div id="requestsList" class="mt-2"></div>
     </div>
-    <script src="../js/mock-data.js"></script>
     <script src="../js/main.js"></script>
-    <script>
-        api.requireAuth();
-        const data = api.getData();
-        const reqs = data.requests.filter(r => r.studentId === api.getCurrentUser());
-        const cont = document.getElementById('requestsList');
-
-        if (reqs.length === 0) {
-            cont.innerHTML = `
-                <div class="empty-state">
-                    <div class="empty-state-icon">📭</div>
-                    <p>No requests found. Browse available teams to send a join request.</p>
-                    <a href="available-teams.html" class="btn-primary mt-2">Browse Teams</a>
-                </div>
-            `;
-        } else {
-            reqs.forEach(r => {
-                const team = data.teams.find(t => t.id === r.teamId);
-                const teamName = team ? team.name : `Team #${r.teamId}`;
-                const statusColor = r.status === 'Accepted' ? 'color:#16a34a' : r.status === 'Rejected' ? 'color:#dc2626' : 'color:#d97706';
-                cont.innerHTML += `
-                    <div class="card mt-1">
-                        <h4>${teamName}</h4>
-                        ${team ? `<p class="text-muted">${team.hackathon}</p>` : ''}
-                        <p>Status: <strong style="${statusColor}">${r.status}</strong></p>
-                    </div>
-                `;
-            });
-        }
-    </script>
+    <script src="../js/my-requests.js"></script>
 </body>
+
 </html>

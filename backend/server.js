@@ -1,56 +1,64 @@
-// server.js
-require('dotenv').config({ path: require('path').join(__dirname, '.env') });
+const path = require('node:path');
+require('dotenv').config({ path: path.join(__dirname, '.env') });
 const express = require('express');
 const cors = require('cors');
 const session = require('express-session');
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const db = require('./db');
+const { RequestError } = require('./data');
+const mountProfileRoutes = require('./profile');
+const mountTeamRoutes = require('./teams');
+
+if (!process.env.SESSION_SECRET) {
+  throw new Error('SESSION_SECRET is required in backend/.env');
+}
+const FRONTEND_URL = process.env.FRONTEND_URL ? new URL(process.env.FRONTEND_URL).origin : '';
+const production = process.env.NODE_ENV === 'production';
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
 // ==== Middleware ==== //
-app.use(express.json());
-app.use(cors({
-  origin: 'http://localhost:5500', // frontend origin (adjust if needed)
-  credentials: true,
-}));
+if (FRONTEND_URL) app.use('/api', cors({ origin: FRONTEND_URL, credentials: true }));
+if (process.env.TRUST_PROXY === '1') app.set('trust proxy', 1);
+app.use('/api', express.json());
 
-app.use(session({
-  secret: process.env.SESSION_SECRET || 'change_this_secret',
+app.use('/api', session({
+  secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: false,
-  cookie: { httpOnly: true, secure: false, sameSite: 'lax' },
+  cookie: { httpOnly: true, secure: production, sameSite: 'lax' },
 }));
 
-app.use(passport.initialize());
-app.use(passport.session());
+app.use('/api', passport.initialize());
+app.use('/api', passport.session());
 
 // ==== Passport configuration (Google OAuth 2.0) ==== //
 passport.use(new GoogleStrategy({
   clientID: process.env.GOOGLE_CLIENT_ID,
   clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-  callbackURL: '/api/auth/google/callback',
+  callbackURL: process.env.GOOGLE_CALLBACK_URL || '/api/auth/google/callback',
+  state: true,
+  proxy: process.env.TRUST_PROXY === '1',
 }, async (accessToken, refreshToken, profile, done) => {
   try {
-    // Extract essential fields
-    const email = profile.emails[0].value;
-    const fullName = profile.displayName;
-    const googleId = profile.id;
-    // Upsert student record
+    const emailObj = profile.emails && profile.emails[0];
+    const email = emailObj && emailObj.value.toLowerCase();
+
+    // Only verified @thapar.edu accounts may sign in
+    if (!email || emailObj.verified !== true || !email.endsWith('@thapar.edu')) {
+      return done(null, false);
+    }
+
+    await db.promise().execute(
+      `INSERT INTO students (google_id, full_name, email) VALUES (?, ?, ?)
+       ON DUPLICATE KEY UPDATE email = ?`,
+      [profile.id, profile.displayName || email, email, email]
+    );
     const [rows] = await db.promise().execute(
-      `INSERT INTO students (google_id, full_name, email) VALUES (?, ?, ?) 
-       ON DUPLICATE KEY UPDATE full_name = VALUES(full_name), email = VALUES(email)`,
-      [googleId, fullName, email]
-    );
-    // Retrieve the student row (including internal id)
-    const [studentRows] = await db.promise().execute(
-      'SELECT * FROM students WHERE google_id = ?',
-      [googleId]
-    );
-    const student = studentRows[0];
-    return done(null, student);
+      'SELECT * FROM students WHERE google_id = ?', [profile.id]);
+    return done(null, rows[0]);
   } catch (err) {
     return done(err, null);
   }
@@ -76,21 +84,30 @@ app.get('/api/health', (req, res) => {
 });
 
 // Auth routes
-app.get('/api/auth/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
+app.get('/api/auth/google',
+  passport.authenticate('google', {
+    scope: ['profile', 'email'],
+    hd: 'thapar.edu',
+    prompt: 'select_account',
+  }));
 
 app.get('/api/auth/google/callback',
-  passport.authenticate('google', { failureRedirect: '/pages/login.html' }),
-  (req, res) => {
-    // Successful auth – redirect to dashboard or send JSON
-    res.redirect('/pages/dashboard.html');
-  }
-);
+  (req, res, next) => passport.authenticate('google', (error, user) => {
+    if (error) {
+      console.error('Google sign-in failed:', error.code || error.name);
+      return res.redirect(`${FRONTEND_URL}/pages/login.html?error=sign_in_failed`);
+    }
+    if (!user) return res.redirect(`${FRONTEND_URL}/pages/login.html?error=not_allowed`);
+    req.logIn(user, err => err ? next(err) : next());
+  })(req, res, next),
+  (req, res) => res.redirect(`${FRONTEND_URL}/pages/dashboard.html`));
 
-app.get('/api/auth/logout', (req, res) => {
-  req.logout(() => {});
-  res.json({ message: 'Logged out' });
+app.get('/api/auth/logout', (req, res, next) => {
+  req.logout(err => {
+    if (err) return next(err);
+    res.json({ message: 'Logged out' });
+  });
 });
-
 // Current user endpoint (protected)
 app.get('/api/auth/me', (req, res) => {
   if (!req.isAuthenticated()) {
@@ -100,68 +117,52 @@ app.get('/api/auth/me', (req, res) => {
   res.json({ id, full_name, email, student_id, phone });
 });
 
-// ----------------------------
-// Real API: List all teams (development)
-// ----------------------------
-app.get('/api/teams', async (req, res) => {
-  try {
-    const [rows] = await db.promise().execute(`
-      SELECT t.id, t.name, t.project_title, t.project_description, t.status, t.capacity,
-             l.full_name AS leader_name
-      FROM teams t
-      JOIN students l ON t.leader_id = l.id
-    `);
-    res.json(rows);
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: 'DB error' });
-  }
+const router = express.Router();
+router.get('/stats', (req, res, next) => {
+  db.promise().execute(`
+    SELECT (SELECT COUNT(*) FROM students) AS registered_students,
+           (SELECT COUNT(*) FROM teams WHERE status IN ('open', 'full')) AS active_teams,
+           (SELECT COUNT(*) FROM teams) AS total_teams,
+           (SELECT COUNT(*) FROM hackathons) AS hackathons
+  `).then(([[stats]]) => {
+    res.set('Cache-Control', 'no-store');
+    res.json(Object.fromEntries(Object.entries(stats).map(([key, value]) => [key, Number(value)])));
+  }).catch(next);
 });
+const route = handler => (req, res, next) => {
+  if (!req.isAuthenticated()) return res.status(401).json({ error: 'Unauthenticated' });
+  const origin = req.get('origin');
+  if (req.method !== 'GET' && req.method !== 'HEAD' && origin &&
+      origin !== FRONTEND_URL && origin !== `${req.protocol}://${req.get('host')}`) {
+    return res.status(403).json({ error: 'Request origin is not allowed.' });
+  }
+  return Promise.resolve(handler(req, res)).catch(next);
+};
+mountProfileRoutes(router, route);
+mountTeamRoutes(router, route);
+app.use('/api', router);
 
-// ----------------------------
-// Mock login route (development only) – allows you to create a session without Google OAuth
-// ----------------------------
-app.post('/api/auth/mock-login', async (req, res) => {
-  const { googleId, email, fullName } = req.body;
-  if (!googleId || !email) {
-    return res.status(400).json({ error: 'googleId and email required' });
-  }
-  try {
-    // Upsert student record
-    await db.promise().execute(
-      `INSERT INTO students (google_id, full_name, email) VALUES (?, ?, ?) 
-       ON DUPLICATE KEY UPDATE full_name = VALUES(full_name), email = VALUES(email)`,
-      [googleId, fullName || 'Mock User', email]
-    );
-    const [rows] = await db.promise().execute('SELECT * FROM students WHERE google_id = ?', [googleId]);
-    const user = rows[0];
-    req.login(user, err => {
-      if (err) return res.status(500).json({ error: 'Login failed' });
-      return res.json({ message: 'Mock login successful', user: { id: user.id, full_name: user.full_name, email: user.email } });
-    });
-  } catch (e) {
-    console.error(e);
-    res.status(500).json({ error: 'Server error' });
-  }
-});
-app.get('/api/debug/teams', async (req, res) => {
-  try {
-    const [rows] = await db.promise().execute(`
-      SELECT t.id, t.name, t.project_title, t.status, t.capacity,
-             l.full_name AS leader_name
-      FROM teams t
-      JOIN students l ON t.leader_id = l.id
-    `);
-    res.json(rows);
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: 'DB error' });
-  }
-});
 app.use('/api', (req, res) => {
-  res.status(404).json({ error: 'Endpoint not implemented yet' });
+  res.status(404).json({ error: 'Endpoint not found.' });
 });
 
-app.listen(PORT, () => {
-  console.log(`🚀 Backend listening on http://localhost:${PORT}`);
+app.use('/api', (error, req, res, next) => {
+  if (res.headersSent) return next(error);
+  if (error instanceof RequestError) return res.status(error.status).json({ error: error.message, code: error.code });
+  if (error.type === 'entity.parse.failed') return res.status(400).json({ error: 'Invalid JSON.' });
+  if (error.type === 'entity.too.large') return res.status(413).json({ error: 'Request is too large.' });
+  if (error.code === 'ER_DUP_ENTRY') return res.status(409).json({ error: 'This record already exists.' });
+  console.error('API request failed:', req.method, req.path, error.code || error.name);
+  res.status(500).json({ error: 'The server could not complete this request.' });
 });
+
+const frontend = path.resolve(__dirname, '..');
+app.get(['/', '/index.html'], (req, res) => res.sendFile(path.join(frontend, 'index.html')));
+for (const directory of ['pages', 'css', 'js']) {
+  app.use(`/${directory}`, express.static(path.join(frontend, directory)));
+}
+
+if (require.main === module) {
+  app.listen(PORT, () => console.log(`TeamForge listening on http://localhost:${PORT}`));
+}
+module.exports = app;
