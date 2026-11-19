@@ -15,6 +15,7 @@ process.env.GOOGLE_CALLBACK_URL = '/api/auth/google/callback';
 process.env.FRONTEND_URL = '';
 process.env.SESSION_SECRET = randomUUID();
 process.env.NODE_ENV = 'test';
+process.env.SESSION_STORE = 'mysql';
 
 const app = require('../server');
 const db = require('../db').promise();
@@ -36,6 +37,7 @@ test('profile completion, applicant privacy, live counts, team approvals and del
   await once(server, 'listening');
   t.after(async () => {
     await new Promise(resolve => server.close(resolve));
+    await app.locals.sessionStore.close();
     await db.end();
   });
   const origin = `http://127.0.0.1:${server.address().port}`;
@@ -74,6 +76,8 @@ test('profile completion, applicant privacy, live counts, team approvals and del
   const alice = await signIn('alice');
   const bob = await signIn('bob');
   const chris = await signIn('chris');
+  const [[{ saved_sessions }]] = await db.execute('SELECT COUNT(*) AS saved_sessions FROM sessions');
+  assert.ok(saved_sessions >= 4);
   assert.equal((await call('/stats')).result.registered_students, initialStats.registered_students + 4);
   const incomplete = (await call('/profile', { cookie: leader })).result;
   assert.equal(incomplete.profile_complete, false);

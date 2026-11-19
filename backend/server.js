@@ -15,6 +15,17 @@ if (!process.env.SESSION_SECRET) {
 }
 const FRONTEND_URL = process.env.FRONTEND_URL ? new URL(process.env.FRONTEND_URL).origin : '';
 const production = process.env.NODE_ENV === 'production';
+const useDatabaseSessions = production || process.env.SESSION_STORE === 'mysql';
+let sessionStore;
+let sessionStoreReady = Promise.resolve(true);
+if (useDatabaseSessions) {
+  const MySQLStore = require('express-mysql-session')(session);
+  sessionStore = new MySQLStore({ endConnectionOnClose: false }, db.promise());
+  sessionStoreReady = sessionStore.onReady().then(() => true, error => {
+    console.error('Session store initialization failed:', error.code || error.name);
+    return false;
+  });
+}
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -25,10 +36,11 @@ if (process.env.TRUST_PROXY === '1') app.set('trust proxy', 1);
 app.use('/api', express.json());
 
 app.use('/api', session({
+  store: sessionStore,
   secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: false,
-  cookie: { httpOnly: true, secure: production, sameSite: 'lax' },
+  cookie: { httpOnly: true, secure: production, sameSite: 'lax', maxAge: 86400000 },
 }));
 
 app.use('/api', passport.initialize());
@@ -79,8 +91,14 @@ passport.deserializeUser(async (id, done) => {
 });
 
 // ==== Routes ==== //
-app.get('/api/health', (req, res) => {
-  res.json({ status: 'ok' });
+app.get('/api/health', async (req, res) => {
+  try {
+    if (!await sessionStoreReady) throw new Error('Session store unavailable');
+    await db.promise().execute('SELECT 1');
+    res.json({ status: 'ok' });
+  } catch {
+    res.status(503).json({ error: 'Database is temporarily unavailable.' });
+  }
 });
 
 // Auth routes
@@ -166,3 +184,4 @@ if (require.main === module) {
   app.listen(PORT, () => console.log(`TeamForge listening on http://localhost:${PORT}`));
 }
 module.exports = app;
+app.locals.sessionStore = sessionStore;
